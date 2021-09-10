@@ -2,22 +2,21 @@
 import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import com.google.gson.Gson
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 @Composable
-@Preview
 fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
-
     DesktopMaterialTheme {
+        Text("Susah Bener Jetpack Compose")
         RecyclerView()
     }
 }
@@ -28,12 +27,11 @@ fun main() = application {
     }
 }
 
-
 @Composable
 fun RecyclerView() {
     LazyColumn {
         items(5) { index ->
-            Text("this is list from $index")
+            Text("this is list from ${index}")
         }
     }
 }
