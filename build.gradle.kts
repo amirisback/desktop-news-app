@@ -20,6 +20,8 @@ repositories {
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation("io.ktor:ktor-client-core:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+    implementation("com.google.code.gson:gson:2.8.8")
 }
 
 tasks.withType<KotlinCompile>() {
