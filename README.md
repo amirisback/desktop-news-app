@@ -1,10 +1,21 @@
 ## caravan-kotlin-desktop-compose
 Project Learning Jetpack Compose on Desktop Aplication
+- Request Data Retrofit
 
 ## Version Release
 This Is Latest Release
 
-    $version_release = $development
+    $version_release = 1.0.0
+
+## Screen Shoot
+
+### App
+
+![ScreenShoot](docs/image/ss_1.png?raw=true)
+
+### Console
+
+![ScreenShoot](docs/image/ss_2.png?raw=true)
 
 ## Colaborator
 Very open to anyone, I'll write your name under this, please contribute by sending an email to me
