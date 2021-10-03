@@ -18,9 +18,13 @@ repositories {
 }
 
 dependencies {
+
     implementation(compose.desktop.currentOs)
-    implementation("io.ktor:ktor-client-core:1.6.3")
+
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+
     implementation("com.google.code.gson:gson:2.8.8")
     implementation("com.github.nazmulidris:color-console:1.0.0")
 
@@ -35,10 +39,16 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
 
-    // Koin core features
+    implementation("io.ktor:ktor-client-core:1.6.4")
+    implementation("io.ktor:ktor-client-cio:1.6.4")
+    implementation("io.ktor:ktor-client-json:1.6.4")
+    implementation("io.ktor:ktor-client-logging:1.6.4")
+    implementation("io.ktor:ktor-client-serialization:1.6.4")
+
+    implementation("co.touchlab:kermit:0.1.8")
+
     implementation("io.insert-koin:koin-core:3.1.2")
-    // Koin test features
-    testImplementation("io.insert-koin:koin-test:$3.1.2")
+    testImplementation("io.insert-koin:koin-test:3.1.2")
 
 }
 

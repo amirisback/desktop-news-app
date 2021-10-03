@@ -1,4 +1,4 @@
-package sources
+package sources.remote
 
 import androidx.compose.runtime.Composable
 import response.ArticleResponse

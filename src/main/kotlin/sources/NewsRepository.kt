@@ -7,6 +7,8 @@ import core.ConsumeApiResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import sources.remote.FrogoApiClient
+import sources.remote.NewsApiService
 
 /**
  * Created by Faisal Amir

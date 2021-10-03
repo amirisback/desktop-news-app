@@ -1,6 +1,3 @@
-package com.frogobox.api.news
-
-import androidx.compose.runtime.Composable
 import response.ArticleResponse
 import response.SourceResponse
 import sources.NewsRepository
@@ -28,7 +25,6 @@ class ConsumeNewsApi(private val apiKey: String) : IConsumeNewsApi {
 
     private val newsRepository = NewsRepository
 
-    @Composable
     override fun getTopHeadline(
         q: String?,
         sources: String?,
@@ -50,7 +46,6 @@ class ConsumeNewsApi(private val apiKey: String) : IConsumeNewsApi {
         )
     }
 
-    @Composable
     override fun getEverythings(
         q: String?,
         from: String?,
@@ -82,7 +77,6 @@ class ConsumeNewsApi(private val apiKey: String) : IConsumeNewsApi {
         )
     }
 
-    @Composable
     override fun getSources(
         language: String,
         country: String,

@@ -2,21 +2,20 @@
 import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import com.frogobox.api.news.ConsumeNewsApi
 import core.ConsumeApiResponse
 import model.Article
 import response.ArticleResponse
 import util.NewsConstant.CATEGORY_HEALTH
 import util.NewsConstant.COUNTRY_ID
 import util.NewsUrl
+import kotlinx.coroutines.*
 
 @Composable
 fun App() {
     DesktopMaterialTheme {
-        Text("Susah Bener Jetpack Compose")
         RecyclerView()
     }
 }
@@ -30,7 +29,7 @@ fun main() = application {
 @Composable
 fun RecyclerView() {
 
-    val list = mutableListOf<Article>()
+    var newsState : List<Article> by remember { mutableStateOf(emptyList()) }
 
     val consumeNewsApi = ConsumeNewsApi(NewsUrl.API_KEY) // Your API_KEY
     consumeNewsApi.getTopHeadline( // Adding Base Parameter on main function
@@ -42,10 +41,10 @@ fun RecyclerView() {
         null,
         object : ConsumeApiResponse<ArticleResponse> {
             override fun onSuccess(data: ArticleResponse) {
-                data.articles?.let { list.addAll(it) }
                 for (i in data.articles?.indices!!) {
                     println("${i + 1}.\t ${data.articles?.get(i)?.title}")
                 }
+                newsState = data.articles!!
             }
 
             override fun onFailed(statusCode: Int, errorMessage: String) {
@@ -64,16 +63,10 @@ fun RecyclerView() {
 
         })
 
-}
-
-@Composable
-fun RunUI(data: List<Article>): Runnable {
-    return Runnable {
-        println(data.size)
-        LazyColumn {
-            items(data.size) { index ->
-                data[index].title?.let { Text(it) }
-            }
+    LazyColumn {
+        items(newsState.size) { index ->
+            newsState[index].title?.let { Text("${index + 1}.\t\t $it") }
         }
     }
+
 }

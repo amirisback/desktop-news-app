@@ -1,6 +1,3 @@
-package com.frogobox.api.news
-
-import androidx.compose.runtime.Composable
 import response.ArticleResponse
 import response.SourceResponse
 import core.ConsumeApiResponse
@@ -25,7 +22,6 @@ import core.ConsumeApiResponse
 interface IConsumeNewsApi {
 
     // Get Top Headline
-    @Composable
     fun getTopHeadline(
         q: String?,
         sources: String?,
@@ -37,7 +33,6 @@ interface IConsumeNewsApi {
     )
 
     // Get Everythings
-    @Composable
     fun getEverythings(
         q: String?,
         from: String?,
@@ -54,7 +49,6 @@ interface IConsumeNewsApi {
     )
 
     // Get Sources
-    @Composable
     fun getSources(
         language: String,
         country: String,
