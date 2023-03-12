@@ -1,6 +1,4 @@
-package core
-
-import androidx.compose.runtime.Composable
+package callback
 
 /*
  * Created by faisalamir on 21/08/21
@@ -14,7 +12,7 @@ import androidx.compose.runtime.Composable
  * All rights reserved
  *
  */
-interface ConsumeApiResponse<T> {
+interface ApiResponseCallback<T> {
 
     fun onSuccess(data: T)
 

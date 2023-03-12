@@ -1,7 +1,8 @@
-package sources
+package viewmodel
 
 import model.ArticleResponse
 import model.SourceResponse
+import sources.NewsRepository
 import callback.ApiResponseCallback
 
 /**
@@ -18,14 +19,15 @@ import callback.ApiResponseCallback
  * LinkedIn : linkedin.com/in/faisalamircs
  * -----------------------------------------
  * FrogoBox Software Industries
- * com.frogobox.frogoconsumeapi.news.data.source
+ * com.frogobox.frogoconsumeapi.news
  *
  */
-interface NewsDataSource {
 
-    // Get Top Headline
-    fun getTopHeadline(
-        apiKey: String,
+class MainViewModelRx(private val apiKey: String) : IMainViewModel {
+
+    private val newsRepository = NewsRepository
+
+    override fun getTopHeadline(
         q: String?,
         sources: String?,
         category: String?,
@@ -33,11 +35,20 @@ interface NewsDataSource {
         pageSize: Int?,
         page: Int?,
         callback: ApiResponseCallback<ArticleResponse>
-    )
+    ) {
+        newsRepository.getTopHeadlineRx(
+            apiKey,
+            q,
+            sources,
+            category,
+            country,
+            pageSize,
+            page,
+            callback
+        )
+    }
 
-    // Get Everythings
-    fun getEverythings(
-        apiKey: String,
+    override fun getEverythings(
         q: String?,
         from: String?,
         to: String?,
@@ -50,53 +61,36 @@ interface NewsDataSource {
         pageSize: Int?,
         page: Int?,
         callback: ApiResponseCallback<ArticleResponse>
-    )
+    ) {
+        newsRepository.getEverythingsRx(
+            apiKey,
+            q,
+            from,
+            to,
+            qInTitle,
+            sources,
+            domains,
+            excludeDomains,
+            language,
+            sortBy,
+            pageSize,
+            page,
+            callback
+        )
+    }
 
-    // Get Sources
-    fun getSources(
-        apiKey: String,
+    override fun getSources(
         language: String,
         country: String,
         category: String,
         callback: ApiResponseCallback<SourceResponse>
-    )
-
-    // Get Top Headline
-    fun getTopHeadlineRx(
-        apiKey: String,
-        q: String?,
-        sources: String?,
-        category: String?,
-        country: String?,
-        pageSize: Int?,
-        page: Int?,
-        callback: ApiResponseCallback<ArticleResponse>
-    )
-
-    // Get Everythings
-    fun getEverythingsRx(
-        apiKey: String,
-        q: String?,
-        from: String?,
-        to: String?,
-        qInTitle: String?,
-        sources: String?,
-        domains: String?,
-        excludeDomains: String?,
-        language: String?,
-        sortBy: String?,
-        pageSize: Int?,
-        page: Int?,
-        callback: ApiResponseCallback<ArticleResponse>
-    )
-
-    // Get Sources
-    fun getSourcesRx(
-        apiKey: String,
-        language: String,
-        country: String,
-        category: String,
-        callback: ApiResponseCallback<SourceResponse>
-    )
-
+    ) {
+        newsRepository.getSourcesRx(
+            apiKey,
+            language,
+            country,
+            category,
+            callback
+        )
+    }
 }

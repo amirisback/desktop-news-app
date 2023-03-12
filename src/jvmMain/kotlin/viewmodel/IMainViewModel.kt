@@ -1,6 +1,8 @@
-import response.ArticleResponse
-import response.SourceResponse
-import core.ConsumeApiResponse
+package viewmodel
+
+import model.ArticleResponse
+import model.SourceResponse
+import callback.ApiResponseCallback
 
 /**
  * Created by Faisal Amir
@@ -19,7 +21,7 @@ import core.ConsumeApiResponse
  * com.frogobox.frogoconsumeapi.news
  *
  */
-interface IConsumeNewsApi {
+interface IMainViewModel {
 
     // Get Top Headline
     fun getTopHeadline(
@@ -29,7 +31,7 @@ interface IConsumeNewsApi {
         country: String?,
         pageSize: Int?,
         page: Int?,
-        callback: ConsumeApiResponse<ArticleResponse>
+        callback: ApiResponseCallback<ArticleResponse>
     )
 
     // Get Everythings
@@ -45,7 +47,7 @@ interface IConsumeNewsApi {
         sortBy: String?,
         pageSize: Int?,
         page: Int?,
-        callback: ConsumeApiResponse<ArticleResponse>
+        callback: ApiResponseCallback<ArticleResponse>
     )
 
     // Get Sources
@@ -53,7 +55,7 @@ interface IConsumeNewsApi {
         language: String,
         country: String,
         category: String,
-        callback: ConsumeApiResponse<SourceResponse>
+        callback: ApiResponseCallback<SourceResponse>
     )
 
 }

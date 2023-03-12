@@ -1,7 +1,9 @@
-import response.ArticleResponse
-import response.SourceResponse
+package viewmodel
+
+import model.ArticleResponse
+import model.SourceResponse
 import sources.NewsRepository
-import core.ConsumeApiResponse
+import callback.ApiResponseCallback
 
 /**
  * Created by Faisal Amir
@@ -21,7 +23,7 @@ import core.ConsumeApiResponse
  *
  */
 
-class ConsumeNewsApi(private val apiKey: String) : IConsumeNewsApi {
+class MainViewModel(private val apiKey: String) : IMainViewModel {
 
     private val newsRepository = NewsRepository
 
@@ -32,7 +34,7 @@ class ConsumeNewsApi(private val apiKey: String) : IConsumeNewsApi {
         country: String?,
         pageSize: Int?,
         page: Int?,
-        callback: ConsumeApiResponse<ArticleResponse>
+        callback: ApiResponseCallback<ArticleResponse>
     ) {
         newsRepository.getTopHeadline(
             apiKey,
@@ -58,7 +60,7 @@ class ConsumeNewsApi(private val apiKey: String) : IConsumeNewsApi {
         sortBy: String?,
         pageSize: Int?,
         page: Int?,
-        callback: ConsumeApiResponse<ArticleResponse>
+        callback: ApiResponseCallback<ArticleResponse>
     ) {
         newsRepository.getEverythings(
             apiKey,
@@ -81,7 +83,7 @@ class ConsumeNewsApi(private val apiKey: String) : IConsumeNewsApi {
         language: String,
         country: String,
         category: String,
-        callback: ConsumeApiResponse<SourceResponse>
+        callback: ApiResponseCallback<SourceResponse>
     ) {
         newsRepository.getSources(
             apiKey,

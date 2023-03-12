@@ -1,7 +1,8 @@
 package sources.remote
 
-import response.ArticleResponse
-import response.SourceResponse
+import io.reactivex.rxjava3.core.Observable
+import model.ArticleResponse
+import model.SourceResponse
 import util.NewsConstant
 import util.NewsUrl.URL_EVERYTHING
 import util.NewsUrl.URL_SOURCES
@@ -66,5 +67,43 @@ interface NewsApiService {
         @Query(NewsConstant.QUERY_COUNTRY) country: String,
         @Query(NewsConstant.QUERY_CATEGORY) category: String
     ): Call<SourceResponse>
+
+    // Get Top Headline
+    @GET(URL_TOP_HEADLINE)
+    fun getTopHeadlineRx(
+        @Query(NewsConstant.QUERY_API_KEY) apiKey: String,
+        @Query(NewsConstant.QUERY_Q) q: String?,
+        @Query(NewsConstant.QUERY_SOURCES) sources: String?,
+        @Query(NewsConstant.QUERY_CATEGORY) category: String?,
+        @Query(NewsConstant.QUERY_COUNTRY) country: String?,
+        @Query(NewsConstant.QUERY_PAGE_SIZE) pageSize: Int?,
+        @Query(NewsConstant.QUERY_PAGE) page: Int?
+    ): Observable<ArticleResponse>
+
+    // Get Everythings
+    @GET(URL_EVERYTHING)
+    fun getEverythingsRx(
+        @Query(NewsConstant.QUERY_API_KEY) apiKey: String,
+        @Query(NewsConstant.QUERY_Q) q: String?,
+        @Query(NewsConstant.QUERY_FROM) from: String?,
+        @Query(NewsConstant.QUERY_TO) to: String?,
+        @Query(NewsConstant.QUERY_Q_IN_TITLE) qInTitle: String?,
+        @Query(NewsConstant.QUERY_SOURCES) sources: String?,
+        @Query(NewsConstant.QUERY_DOMAINS) domains: String?,
+        @Query(NewsConstant.QUERY_EXCLUDE_DOMAINS) excludeDomains: String?,
+        @Query(NewsConstant.QUERY_LANGUAGE) language: String?,
+        @Query(NewsConstant.QUERY_SORT_BY) sortBy: String?,
+        @Query(NewsConstant.QUERY_PAGE_SIZE) pageSize: Int?,
+        @Query(NewsConstant.QUERY_PAGE) page: Int?
+    ): Observable<ArticleResponse>
+
+    // Get Sources
+    @GET(URL_SOURCES)
+    fun getSourcesRx(
+        @Query(NewsConstant.QUERY_API_KEY) apiKey: String,
+        @Query(NewsConstant.QUERY_LANGUAGE) language: String,
+        @Query(NewsConstant.QUERY_COUNTRY) country: String,
+        @Query(NewsConstant.QUERY_CATEGORY) category: String
+    ): Observable<SourceResponse>
 
 }

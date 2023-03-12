@@ -1,6 +1,6 @@
-package response
+package model
 
-import model.Article
+import model.Source
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -20,21 +20,12 @@ import com.google.gson.annotations.SerializedName
  * com.frogobox.frogoconsumeapi.news.data.response
  *
  */
-data class ArticleResponse(
+data class SourceResponse(
 
     @SerializedName("status")
     var status: String? = null,
 
-    @SerializedName("totalResults")
-    var totalResults: Int? = null,
-
-    @SerializedName("code")
-    var code: String? = null,
-
-    @SerializedName("message")
-    var message: String? = null,
-
-    @SerializedName("articles")
-    var articles: List<Article>? = null
+    @SerializedName("sources")
+    var sources: List<Source>? = null
 
 )

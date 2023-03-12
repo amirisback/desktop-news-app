@@ -9,8 +9,6 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
 
-    val TAG = ApiClient::class.java.simpleName
-
     inline fun <reified T> create(url: String): T {
 
         return Retrofit.Builder()

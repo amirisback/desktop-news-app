@@ -34,18 +34,16 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
 
-                implementation("com.google.code.gson:gson:2.8.8")
+                implementation("com.google.code.gson:gson:2.10.1")
 
-                implementation("com.squareup.okhttp3:okhttp:4.9.1")
-                implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+                implementation("com.squareup.okhttp3:okhttp:4.10.0")
+                implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
                 implementation("com.squareup.retrofit2:retrofit:2.9.0")
                 implementation("com.squareup.retrofit2:converter-gson:2.9.0")
                 implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
                 implementation("io.reactivex.rxjava3:rxjava:3.1.6")
-
-                implementation("co.touchlab:kermit:0.1.8")
 
                 implementation("io.insert-koin:koin-core:3.1.2")
             }
