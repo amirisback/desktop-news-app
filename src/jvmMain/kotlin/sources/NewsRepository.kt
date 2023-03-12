@@ -7,30 +7,13 @@ import core.ConsumeApiResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import sources.remote.FrogoApiClient
+import sources.remote.ApiClient
 import sources.remote.NewsApiService
 
-/**
- * Created by Faisal Amir
- * FrogoBox Inc License
- * =========================================
- * consumable-code-news-api
- * Copyright (C) 15/03/2020.
- * All rights reserved
- * -----------------------------------------
- * Name     : Muhammad Faisal Amir
- * E-mail   : faisalamircs@gmail.com
- * Github   : github.com/amirisback
- * LinkedIn : linkedin.com/in/faisalamircs
- * -----------------------------------------
- * FrogoBox Software Industries
- * com.frogobox.frogoconsumeapi.news.data.source
- *
- */
 object NewsRepository : NewsDataSource {
 
     private val TAG = NewsRepository::class.java.simpleName
-    private var newsApiService = FrogoApiClient.create<NewsApiService>(NewsUrl.BASE_URL)
+    private var newsApiService = ApiClient.create<NewsApiService>(NewsUrl.BASE_URL)
 
     override fun getTopHeadline(
         apiKey: String,

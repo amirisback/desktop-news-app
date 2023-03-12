@@ -1,13 +1,11 @@
 package sources.remote
 
-import androidx.compose.runtime.Composable
 import response.ArticleResponse
 import response.SourceResponse
 import util.NewsConstant
 import util.NewsUrl.URL_EVERYTHING
 import util.NewsUrl.URL_SOURCES
 import util.NewsUrl.URL_TOP_HEADLINE
-import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
