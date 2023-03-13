@@ -1,7 +1,8 @@
-## caravan-kotlin-desktop-compose
+## Desktop Jetpack Compose
 Project Learning Jetpack Compose on Desktop Aplication
 - Request Data Retrofit
 - Simple Example RxJava Jetpack Compose Desktop Apps
+- News Api
 
 ## Version Release
 This Is Latest Release
