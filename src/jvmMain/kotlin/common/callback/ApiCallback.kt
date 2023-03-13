@@ -1,4 +1,4 @@
-package callback
+package common.callback
 
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
@@ -18,7 +18,7 @@ import java.net.UnknownHostException
  * All rights reserved
  *
  */
-abstract class ApiCallback<M : Any> : Observer<M> {
+abstract class ApiCallback<M: Any> : Observer<M> {
 
     abstract fun onSuccess(data: M)
 

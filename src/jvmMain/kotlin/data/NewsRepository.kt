@@ -1,23 +1,28 @@
-package sources
+package data
 
 import model.ArticleResponse
 import model.SourceResponse
 import util.NewsUrl
-import callback.ApiResponseCallback
-import callback.ApiCallback
-import io.reactivex.rxjava3.schedulers.Schedulers
+import common.callback.ApiResponseCallback
+import common.callback.ApiCallback
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import sources.remote.ApiClient
-import sources.remote.NewsApiService
+import data.remote.ApiClient
+import data.remote.NewsApiService
 
-object NewsRepository : NewsDataSource {
+class NewsRepository : NewsDataSource {
 
+    val disposable: CompositeDisposable by lazy { CompositeDisposable() }
     private var newsApiService = ApiClient.create<NewsApiService>(NewsUrl.BASE_URL, true)
 
+    private val apiKey = NewsUrl.API_KEY
+
+
     override fun getTopHeadline(
-        apiKey: String,
         q: String?,
         sources: String?,
         category: String?,
@@ -44,7 +49,6 @@ object NewsRepository : NewsDataSource {
     }
 
     override fun getEverythings(
-        apiKey: String,
         q: String?,
         from: String?,
         to: String?,
@@ -88,12 +92,12 @@ object NewsRepository : NewsDataSource {
     }
 
     override fun getSources(
-        apiKey: String,
         language: String,
         country: String,
         category: String,
         callback: ApiResponseCallback<SourceResponse>
     ) {
+        callback.onShowProgress()
         newsApiService.getSources(apiKey, language, country, category)
             .enqueue(object : Callback<SourceResponse> {
 
@@ -111,7 +115,6 @@ object NewsRepository : NewsDataSource {
     }
 
     override fun getTopHeadlineRx(
-        apiKey: String,
         q: String?,
         sources: String?,
         category: String?,
@@ -121,10 +124,8 @@ object NewsRepository : NewsDataSource {
         callback: ApiResponseCallback<ArticleResponse>
     ) {
         newsApiService.getTopHeadlineRx(apiKey, q, sources, category, country, pageSize, page)
-            .subscribeOn(Schedulers.io())
             .doOnSubscribe { callback.onShowProgress() }
             .doOnTerminate { callback.onHideProgress() }
-            .observeOn(Schedulers.single())
             .subscribe(object : ApiCallback<ArticleResponse>() {
                 override fun onSuccess(data: ArticleResponse) {
                     callback.onSuccess(data)
@@ -137,7 +138,6 @@ object NewsRepository : NewsDataSource {
     }
 
     override fun getEverythingsRx(
-        apiKey: String,
         q: String?,
         from: String?,
         to: String?,
@@ -165,33 +165,35 @@ object NewsRepository : NewsDataSource {
             pageSize,
             page
         )
-            .subscribeOn(Schedulers.io())
             .doOnSubscribe { callback.onShowProgress() }
             .doOnTerminate { callback.onHideProgress() }
-            .observeOn(Schedulers.trampoline())
-            .subscribe(object : ApiCallback<ArticleResponse>() {
-                override fun onSuccess(data: ArticleResponse) {
-                    callback.onSuccess(data)
+            .subscribe(object : Observer<ArticleResponse>{
+                override fun onSubscribe(d: Disposable) {
+                    disposable.add(d)
                 }
 
-                override fun onFailure(code: Int, errorMessage: String) {
-                    callback.onFailed(code, errorMessage)
+                override fun onError(e: Throwable) {
+                    callback.onFailed(500, e.localizedMessage)
+                }
+
+                override fun onComplete() {
+                }
+
+                override fun onNext(t: ArticleResponse) {
+                    callback.onSuccess(t)
                 }
             })
     }
 
     override fun getSourcesRx(
-        apiKey: String,
         language: String,
         country: String,
         category: String,
         callback: ApiResponseCallback<SourceResponse>
     ) {
         newsApiService.getSourcesRx(apiKey, language, country, category)
-            .subscribeOn(Schedulers.io())
             .doOnSubscribe { callback.onShowProgress() }
             .doOnTerminate { callback.onHideProgress() }
-            .observeOn(Schedulers.trampoline())
             .subscribe(object : ApiCallback<SourceResponse>() {
                 override fun onSuccess(data: SourceResponse) {
                     callback.onSuccess(data)

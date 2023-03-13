@@ -1,0 +1,147 @@
+package common.compose.widget
+
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.FlingBehavior
+import androidx.compose.foundation.gestures.ScrollableDefaults
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+/*
+ * Created by faisalamir on 21/08/21
+ * RecyclerView
+ * -----------------------------------------
+ * Name     : Muhammad Faisal Amir
+ * E-mail   : faisalamircs@gmail.com
+ * Github   : github.com/amirisback
+ * -----------------------------------------
+ * Copyright (C) 2021 Box Inc.      
+ * All rights reserved
+ *
+ */
+
+
+// -------------------------------------------------------------------------------------------------
+//  Lazy Column
+// -------------------------------------------------------------------------------------------------
+
+@Composable
+fun <T> LazyColumn(
+    data: List<T>,
+    modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    reverseLayout: Boolean = false,
+    verticalArrangement: Arrangement.Vertical =
+        if (!reverseLayout) Arrangement.Top else Arrangement.Bottom,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+    flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+    content: @Composable() LazyItemScope.(data: T) -> Unit
+
+) {
+    LazyColumn(
+        modifier = modifier,
+        state = state,
+        contentPadding = contentPadding,
+        flingBehavior = flingBehavior,
+        horizontalAlignment = horizontalAlignment,
+        verticalArrangement = verticalArrangement,
+        reverseLayout = reverseLayout
+    ) {
+        items(data.size) { index ->
+            content(data[index])
+        }
+    }
+}
+
+
+// -------------------------------------------------------------------------------------------------
+//  Lazy Row
+// -------------------------------------------------------------------------------------------------
+
+@Composable
+fun <T> LazyRow(
+    data: List<T>,
+    modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    reverseLayout: Boolean = false,
+    horizontalArrangement: Arrangement.Horizontal =
+        if (!reverseLayout) Arrangement.Start else Arrangement.End,
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
+    flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+    content: @Composable() LazyItemScope.(data: T) -> Unit
+) {
+    LazyRow(
+        modifier = modifier,
+        state = state,
+        contentPadding = contentPadding,
+        verticalAlignment = verticalAlignment,
+        horizontalArrangement = horizontalArrangement,
+        flingBehavior = flingBehavior,
+        reverseLayout = reverseLayout
+    ) {
+        items(data.size) { index ->
+            content(data[index])
+        }
+    }
+}
+
+
+// -------------------------------------------------------------------------------------------------
+//  Lazy Fixed Grid
+// -------------------------------------------------------------------------------------------------
+
+@ExperimentalFoundationApi
+@Composable
+fun <T> LazyFixedGrid(
+    data: List<T>,
+    spanCount: Int,
+    modifier: Modifier = Modifier,
+    state: LazyGridState = rememberLazyGridState(),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    content: @Composable() LazyGridItemScope.(data: T) -> Unit
+) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        state = state,
+        contentPadding = contentPadding,
+        columns = GridCells.Fixed(spanCount)
+    ) {
+        items(data.size) { index ->
+            content(data[index])
+        }
+    }
+}
+
+
+// -------------------------------------------------------------------------------------------------
+//  Lazy Adaptive Grid
+// -------------------------------------------------------------------------------------------------
+
+@ExperimentalFoundationApi
+@Composable
+fun <T> LazyAdaptiveGrid(
+    data: List<T>,
+    minSize: Dp,
+    modifier: Modifier = Modifier,
+    state: LazyGridState = rememberLazyGridState(),
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+    content: @Composable() LazyGridItemScope.(data: T) -> Unit
+) {
+    LazyVerticalGrid(
+        modifier = modifier,
+        state = state,
+        contentPadding = contentPadding,
+        columns = GridCells.Adaptive(minSize)
+    ) {
+        items(data.size) { index ->
+            content(data[index])
+        }
+    }
+}

@@ -1,72 +1,31 @@
 // Copyright 2000-2021 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
-import callback.ApiResponseCallback
-import model.Article
-import model.ArticleResponse
-import util.NewsConstant.CATEGORY_HEALTH
-import util.NewsConstant.COUNTRY_ID
-import util.NewsUrl
-import viewmodel.MainViewModelRx
+import androidx.compose.ui.window.rememberWindowState
+import mvvm.main.MainScreen
 
 @Composable
 fun App() {
     MaterialTheme {
-        RecyclerView()
+        MainScreen().Create()
     }
 }
 
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
+    Window(
+        title = "News App",
+        onCloseRequest = ::exitApplication,
+        state = rememberWindowState(
+            width = 900.dp,
+            height = 1000.dp,
+            position = WindowPosition(alignment = Alignment.Center)
+        )
+    ) {
         App()
     }
-}
-
-@Composable
-fun RecyclerView() {
-
-    var newsState : List<Article> by remember { mutableStateOf(emptyList()) }
-
-    val consumeNewsApi = MainViewModelRx(NewsUrl.API_KEY) // Your API_KEY
-    consumeNewsApi.getTopHeadline( // Adding Base Parameter on main function
-        null,
-        null,
-        CATEGORY_HEALTH,
-        COUNTRY_ID,
-        null,
-        null,
-        object : ApiResponseCallback<ArticleResponse> {
-            override fun onSuccess(data: ArticleResponse) {
-                for (i in data.articles?.indices!!) {
-                    println("${i + 1}.\t ${data.articles?.get(i)?.title}")
-                }
-                newsState = data.articles!!
-            }
-
-            override fun onFailed(statusCode: Int, errorMessage: String) {
-                // Your failed to do
-            }
-
-            override fun onShowProgress() {
-                // Your Progress Show
-                println("Show Progress")
-            }
-
-            override fun onHideProgress() {
-                // Your Progress Hide
-                println("Hide Progress")
-            }
-
-        })
-
-    LazyColumn {
-        items(newsState.size) { index ->
-            newsState[index].title?.let { Text("${index + 1}.\t\t $it") }
-        }
-    }
-
 }
